@@ -11,7 +11,7 @@ router.post('/', (req, res)=> {
     if('name' === null || 'notes' === null){
         res.status(400).json({message: 'Name and notes cannot be empty.'})
     } else {
-        projects.instert(newProj)
+        projects.insert(newProj)
         .then(data=> {
             res.status(200).json(data);
         })
