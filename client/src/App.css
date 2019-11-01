@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  background: #af884e;
+}
+
+.Card-Container{
+  display: flex;
+  flex-direction: column;
+}
+
+.Card-Container h1{
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+}
+
+.Card{
+  width: 40%;
+  background: white;
+  padding: 5px;
+  margin: 5px auto;
+  border-bottom: 1px solid black;
+}
+
+.action-list{
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  color: gray;
+}
+
