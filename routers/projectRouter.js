@@ -3,28 +3,6 @@ const projects = require('../data/helpers/projectModel.js')
 
 const router = express.Router();
 
-//GET
-router.get('/', (req, res)=> {
-    projects.get()   
-    .then(data=> {
-        res.status(200).json(data);
-    })
-    .catch(err=> {
-        console.log('Error retrieving projects:', err);
-        res.status(500).json({message: 'Error retrieving projects.'})
-    })
-});
-
-router.get('/:id', (req, res)=> {
-    projects.get(req.params.id)
-    .then(data=> {
-        res.status(200).json(data);
-    })
-    .catch(err=> {
-        console.log('Error retrieving project:', err);
-        res.status(500).json({message: 'Error retrieving project.'})
-    })
-});
 
 //POST
 router.post('/', (req, res)=> {
@@ -43,6 +21,30 @@ router.post('/', (req, res)=> {
         })
     }
 });
+
+//GET
+router.get('/', (req, res)=> {
+    projects.get()
+    .then(data=>{
+        res.status(200).json(data)
+    })
+    .catch (err => {
+        console.error('Error: ', err);
+        res.status(500).json({ err: 'Cannot retrieve project data' });
+      });
+})
+
+router.get('/:id', (req, res)=> {
+    projects.get(req.params.id)
+    .then(data=> {
+        res.status(200).json(data);
+    })
+    .catch(err=> {
+        console.log('Error retrieving project:', err);
+        res.status(500).json({message: 'Error retrieving project.'})
+    })
+});
+
 
 //DELETE
 router.delete('/:id', (req, res)=> {
@@ -76,32 +78,6 @@ router.put('/:id', (req, res)=> {
     })
 })
 
-
-
-//CUSTOM MIDDLEWARE
-function validateProject(req, res, next){
-    const valProj = req.body;
-    if(valProj === null){
-        res.status(400).json({message:'Missing project data.'})
-    } else {
-        res.status(200).json(valProj);
-        next()
-    }
-}
-
-function validateProjectId(req, res, next){
-    const valProjId = req.params.id;
-    if(valProjId === null){
-        res.status(400).json({message:'Missing project id.'})
-    } else if (projects.get(valProjId)){
-        next();
-    }else{
-        res.status(401).json({message: 'Unvalidatable'});
-    }
-}
-
-router.unsubscribe(validateProject);
-router.unsubscribe(validateProjectId);
 
 module.exports = router;
 

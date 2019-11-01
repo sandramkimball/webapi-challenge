@@ -31,6 +31,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
     -Intercepts data and decides to run the next function or to stop the cylce.
 
 - [ ] Describe a Resource?
+    -an object that defines a actions.
 
 - [ ] What can the API return to help clients know if a request was successful?
     -Status code 200

@@ -1,5 +1,6 @@
 const express = require('express');
-const actions = require('../data/helpers/actionModel')
+const actions = require('../data/helpers/actionModel.js')
+
 
 const router = express.Router();
 
@@ -7,6 +8,7 @@ const router = express.Router();
 //POST
 router.post('/', (req, res)=> {
     const newAction = req.body;
+    console.log('New Action:', newAction);
     actions.insert(newAction)
     if('description' === null || 'notes' === null){
         res.status(400).json({message: 'Decription and notes cannot be empty.'})
@@ -24,15 +26,16 @@ router.post('/', (req, res)=> {
 
 //GET
 router.get('/', (req, res)=> {
-    // actions.get()   
-    // .then(data=> {
-        res.status(200).json(actions);
-    // })
-    // .catch(err=> {
-    //     console.log('Error retrieving actions:', err);
-    //     res.status(500).json({message: 'Error retrieving actions.'})
-    // })
+    actions.get()   
+    .then(data=> {
+        res.status(200).json(data);
+    })
+    .catch(err=> {
+        console.log('Error retrieving actions:', err);
+        res.status(500).json({message: 'Error retrieving actions.'})
+    })
 });
+
 router.get('/:id', (req, res)=> {
     actions.get(req.params.id)
     .then(data=> {
@@ -77,30 +80,5 @@ router.put('/:id', (req, res)=> {
 })
 
 
-
-//CUSTOM MIDDLEWARE
-function validateAction(req, res, next){
-    const valAction = req.body;
-    if(valAction === null){
-        res.status(400).json({message:'Missing action data.'})
-    } else {
-        res.status(200).json(valUser);
-        next();
-    }
-};
-
-function validateActionId(req, res, next){
-    const valActionId = req.params.id;
-    if(valActionId === null){
-        res.status(400).json({message:'Missing action id.'})
-    } else if (actions.get(valActionId)){
-        next();
-    }else{
-        res.status(401).json({message: 'Unvalidatable'});
-    }
-};
-
-router.use(validateAction);
-router.use(validateActionId);
 
 module.exports = router;
