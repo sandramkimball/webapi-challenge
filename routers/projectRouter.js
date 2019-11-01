@@ -1,11 +1,10 @@
 const express = require('express');
-const projects = require('../seeds/01-projects')
-const actions = require('../seeds/02-actions')
+const projects = require('../data/helpers/projectModel.js')
 
 const router = express.Router();
 
 //GET
-router.get('/', (res, req)=> {
+router.get('/', (req, res)=> {
     projects.get()   
     .then(data=> {
         res.status(200).json(data);
@@ -16,7 +15,7 @@ router.get('/', (res, req)=> {
     })
 });
 
-router.get('/:id', (res, req)=> {
+router.get('/:id', (req, res)=> {
     projects.get(req.params.id)
     .then(data=> {
         res.status(200).json(data);

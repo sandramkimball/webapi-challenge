@@ -1,32 +1,8 @@
 const express = require('express');
-const projects = require('../seeds/01-projects')
-const actions = require('../seeds/02-actions')
+const actions = require('../data/helpers/actionModel')
+
 const router = express.Router();
 
-
-
-//GET
-router.get('/', (res, req)=> {
-    actions.get()   
-    .then(data=> {
-        res.status(200).json(data);
-    })
-    .catch(err=> {
-        console.log('Error retrieving actions:', err);
-        res.status(500).json({message: 'Error retrieving actions.'})
-    })
-});
-
-router.get('/:id', (res, req)=> {
-    actions.get(req.params.id)
-    .then(data=> {
-        res.status(200).json(data);
-    })
-    .catch(err=> {
-        console.log('Error retrieving actions:', err);
-        res.status(500).json({message: 'Error retrieving actions.'})
-    })
-});
 
 //POST
 router.post('/', (req, res)=> {
@@ -46,6 +22,27 @@ router.post('/', (req, res)=> {
     }
 });
 
+//GET
+router.get('/', (req, res)=> {
+    // actions.get()   
+    // .then(data=> {
+        res.status(200).json(actions);
+    // })
+    // .catch(err=> {
+    //     console.log('Error retrieving actions:', err);
+    //     res.status(500).json({message: 'Error retrieving actions.'})
+    // })
+});
+router.get('/:id', (req, res)=> {
+    actions.get(req.params.id)
+    .then(data=> {
+        res.status(200).json(data);
+    })
+    .catch(err=> {
+        console.log('Error retrieving actions:', err);
+        res.status(500).json({message: 'Error retrieving actions.'})
+    })
+});
 
 //DELETE
 router.delete('/:id', (req, res)=> {
